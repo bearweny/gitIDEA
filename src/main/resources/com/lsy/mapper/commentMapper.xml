@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lsy.mapper.CommentMapper">
+    <select id="type" resultType="com.lsy.vo.CommentVO">
+        SELECT c.id, u.username, c.content,u.avator,c.create_time,c.up,
+        u.id userId
+        FROM comment c, consumer u
+        WHERE c.user_id = u.id
+        AND c.type = #{type}
+
+        <!-- type = 0 歌曲评论 -->
+        <if test="type == 0">
+            AND c.song_id = #{id}
+        </if>
+
+        <!-- type = 1 歌单评论 -->
+        <if test="type == 1">
+            AND c.song_list_id = #{id}
+        </if>
+    </select>
+</mapper>
+

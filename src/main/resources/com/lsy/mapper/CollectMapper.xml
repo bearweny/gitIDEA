@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 必须 CollectMapper 全类名 -->
+<mapper namespace="com.lsy.mapper.CollectMapper">
+
+    <select id="getByUserId" resultType="com.lsy.vo.CollectVO">
+        select c.id, s.`name` songName
+        from collect c, song s
+        where c.song_id = s.id
+        and c.user_id = #{userId}
+        <if test="keyword != null and keyword != ''">
+            and s.`name` like concat('%', #{keyword}, '%')
+        </if>
+    </select>
+
+
+</mapper>
